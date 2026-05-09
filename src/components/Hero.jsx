@@ -29,7 +29,7 @@ export default function Hero() {
           <div className="relative mx-auto rounded-2xl overflow-hidden border border-cream-200 hero-glow" style={{ maxWidth: '1080px', aspectRatio: '16/9' }}>
             <video
               className="w-full h-full object-cover"
-              src="/指点演示.mp4"
+              src="/指点演示final.mp4"
               controls
               playsInline
             />
