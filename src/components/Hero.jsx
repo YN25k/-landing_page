@@ -24,25 +24,15 @@ export default function Hero() {
           一步一步指引你点击正确的位置，语音同步讲解每一步操作。
         </p>
 
-        {/* Video placeholder */}
+        {/* Video */}
         <div className="reveal delay-3 mt-12 relative">
-          <div className="relative mx-auto rounded-2xl overflow-hidden border border-cream-200 hero-glow bg-cream-50" style={{ maxWidth: '1080px', aspectRatio: '16/9' }}>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(197,225,122,0.18),transparent_60%),radial-gradient(circle_at_70%_60%,rgba(164,197,82,0.12),transparent_60%)]"></div>
-            <div className="absolute inset-0 opacity-40" style={{
-              backgroundImage: 'repeating-linear-gradient(135deg, transparent 0 18px, rgba(168,159,137,0.12) 18px 19px)'
-            }}></div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-              <button className="group relative w-20 h-20 rounded-full bg-lime text-ink-900 flex items-center justify-center shadow-[0_20px_50px_-12px_rgba(164,197,82,0.7)] hover:scale-105 transition-transform">
-                <span className="absolute inset-0 rounded-full border border-lime-deep/40 animate-ping"></span>
-                <svg width="22" height="26" viewBox="0 0 22 26" fill="currentColor"><path d="M0 1.5C0 .3 1.3-.4 2.4.2l18.3 11c1 .6 1 2 0 2.6L2.4 24.8C1.3 25.4 0 24.7 0 23.5V1.5Z" /></svg>
-              </button>
-              <div className="text-[13px] font-mono text-ink-500 tracking-wider">产品演示视频 · 24s</div>
-            </div>
-            <div className="absolute top-3 left-3 flex gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-cream-300"></span>
-              <span className="w-2.5 h-2.5 rounded-full bg-cream-300"></span>
-              <span className="w-2.5 h-2.5 rounded-full bg-cream-300"></span>
-            </div>
+          <div className="relative mx-auto rounded-2xl overflow-hidden border border-cream-200 hero-glow" style={{ maxWidth: '1080px', aspectRatio: '16/9' }}>
+            <video
+              className="w-full h-full object-cover"
+              src="/指点演示.mp4"
+              controls
+              playsInline
+            />
           </div>
         </div>
 
