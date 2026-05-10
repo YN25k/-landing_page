@@ -27,12 +27,12 @@ export default function Hero() {
         {/* Video */}
         <div className="reveal delay-3 mt-12 relative">
           <div className="relative mx-auto rounded-2xl overflow-hidden border border-cream-200 hero-glow" style={{ maxWidth: '1080px', aspectRatio: '16/9' }}>
-            <iframe
-              className="w-full h-full"
-              src="//player.bilibili.com/player.html?bvid=BV1YfRdBQEds&page=1&high_quality=1&danmaku=0"
-              allowFullScreen
-              frameBorder="0"
-              scrolling="no"
+            <video
+              className="w-full h-full object-cover"
+              src={`${import.meta.env.BASE_URL}demo.mp4`}
+              controls
+              playsInline
+              preload="metadata"
             />
           </div>
         </div>
