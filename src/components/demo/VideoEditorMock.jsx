@@ -34,7 +34,7 @@ export default function VideoEditorMock({ step = 0 }) {
           <div className="p-2 grid grid-cols-2 gap-1.5 overflow-hidden">
             {binClips.map((c, i) => (
               <div key={i} data-target={i === 0 ? 'video-0' : undefined}
-                className={`relative aspect-video rounded overflow-hidden ${i === 0 && step <= 1 ? 'ring-1 ring-[#C5E17A]' : ''}`}
+                className={`relative aspect-video rounded overflow-hidden ${i === 0 && step <= 1 ? 'ring-1 ring-[#C5E17A] cursor-grab' : ''}`}
                 style={{ background: c.tone }}>
                 <div className="absolute bottom-0 left-1 right-1 text-[8px] font-mono text-white/80 truncate">{c.label}</div>
                 <div className="absolute top-0.5 right-0.5 text-[8px] text-white/70 font-mono">0:0{i + 3}</div>
@@ -123,8 +123,8 @@ export default function VideoEditorMock({ step = 0 }) {
           </div>
           {/* Tracks */}
           <div className="absolute left-20 right-0 top-0 bottom-0">
-            {/* V2 */}
-            <div className="h-7 border-b border-black/40 relative bg-[#1F1F1E]">
+            {/* V2 — drop zone for the drag step */}
+            <div data-target="video-0-drop" className="h-7 border-b border-black/40 relative bg-[#1F1F1E]">
               {newClipOnTimeline && (
                 <div className="absolute top-1 bottom-1 left-[14%] w-[10%] rounded-sm" style={{ background: 'linear-gradient(135deg,#7DD3FC,#3B82F6)', animation: 'slideIn .5s ease-out' }}></div>
               )}

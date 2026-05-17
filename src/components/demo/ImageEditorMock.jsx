@@ -110,14 +110,18 @@ export default function ImageEditorMock({ step = 0 }) {
               <select className="bg-[#1F1F1E] border border-black/50 rounded px-1.5 py-0.5 text-[#D9D6CE]" defaultValue="正常">
                 <option>正常</option>
               </select>
-              <div data-target="image-2" className={`flex items-center gap-1.5 px-1.5 py-0.5 rounded ${opacityActive ? 'bg-[#C5E17A]/20 ring-1 ring-[#C5E17A]/60' : ''}`}>
+              <div className={`flex items-center gap-1.5 px-1.5 py-0.5 rounded ${opacityActive ? 'bg-[#C5E17A]/20 ring-1 ring-[#C5E17A]/60' : ''}`}>
                 <span className="text-[#8A877C]">不透明度</span>
                 <span className="font-mono text-[#D9D6CE]">{opacityVal}%</span>
               </div>
             </div>
+            {/* Opacity slider — drag step grabs the thumb and drops on the 35–65% zone */}
             <div className="relative h-1 bg-[#1F1F1E] rounded">
               <div className="absolute left-0 top-0 bottom-0 bg-[#C5E17A] rounded" style={{ width: `${opacityVal}%`, transition: 'width .8s cubic-bezier(.2,.7,.2,1)' }}></div>
-              <div className="absolute -top-1 w-3 h-3 rounded-full bg-[#D9D6CE] border border-black/60" style={{ left: `calc(${opacityVal}% - 6px)`, transition: 'left .8s cubic-bezier(.2,.7,.2,1)' }}></div>
+              {/* Drop zone (around 50%) */}
+              <div data-target="image-2-drop" className="absolute -top-3 h-7 pointer-events-none" style={{ left: '35%', width: '30%' }}></div>
+              {/* Source: the slider thumb (user grabs this and drags) */}
+              <div data-target="image-2" className="absolute -top-1 w-3 h-3 rounded-full bg-[#D9D6CE] border border-black/60 cursor-grab" style={{ left: `calc(${opacityVal}% - 6px)`, transition: 'left .8s cubic-bezier(.2,.7,.2,1)' }}></div>
             </div>
           </div>
           <div className="flex-1 overflow-hidden flex flex-col">

@@ -9,6 +9,7 @@ import Waitlist from './components/Waitlist'
 import UGC from './components/UGC'
 import RulesModal from './components/RulesModal'
 import Footer from './components/Footer'
+import ScrollFx from './components/ScrollFx'
 
 export default function App() {
   useReveal()
@@ -16,6 +17,7 @@ export default function App() {
   return (
     <div className="relative grain">
       <CursorFollower />
+      <ScrollFx />
       <Nav />
       <main>
         <Hero />

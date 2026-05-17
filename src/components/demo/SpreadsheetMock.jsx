@@ -1,6 +1,9 @@
 import { TrafficLights, Click } from './DemoAtoms'
 
-export default function SpreadsheetMock({ step = 0 }) {
+// Accepts a `typedText` prop so the InteractiveDemo can render keystrokes
+// in the formula bar in real time during the 'type' step. When undefined,
+// falls back to the canned step-driven formula.
+export default function SpreadsheetMock({ step = 0, typedText }) {
   const formulaTyping = step >= 2
   const chartBtnActive = step >= 3
   const chartVisible = step >= 3
@@ -15,7 +18,10 @@ export default function SpreadsheetMock({ step = 0 }) {
     'A5': 'Q4', 'B5': '215300', 'C5': '95700', 'D5': '119600',
     'A6': '合计', 'B6': step >= 3 ? '701000' : '',
   }
-  const formula = step >= 3 ? '=SUM(B2:B5)' : (step >= 2 ? '=SUM(B2:B5' : '')
+  const formula = typedText != null
+    ? typedText
+    : (step >= 3 ? '=SUM(B2:B5)' : (step >= 2 ? '=SUM(B2:B5' : ''))
+  const showCaret = typedText != null || (formulaTyping && step < 3)
 
   return (
     <div className="absolute inset-0 flex flex-col bg-white text-[#1F1F1E] select-none">
@@ -49,13 +55,13 @@ export default function SpreadsheetMock({ step = 0 }) {
         <span className="ml-auto text-[#8A877C] font-mono">Sheet 1</span>
       </div>
 
-      {/* Formula bar */}
+      {/* Formula bar — accepts live typing during the 'type' step */}
       <div className="h-7 border-b border-[#D8D8D2] flex items-stretch text-[12px] bg-white">
         <div className="w-14 flex items-center justify-center font-mono text-[#1F1F1E] border-r border-[#D8D8D2] text-[11px]">B6</div>
         <div className="flex items-center px-2 text-[#8A877C] font-mono italic border-r border-[#D8D8D2]">fx</div>
         <div data-target="sheet-1" className="flex-1 flex items-center px-3 font-mono text-[#1F1F1E]">
           {formula}
-          {formulaTyping && step < 3 && <span className="inline-block w-px h-4 bg-[#1F1F1E] ml-px" style={{ animation: 'blink 1s steps(2) infinite' }}></span>}
+          {showCaret && <span className="inline-block w-px h-4 bg-[#1F1F1E] ml-px" style={{ animation: 'blink 1s steps(2) infinite' }}></span>}
         </div>
       </div>
 

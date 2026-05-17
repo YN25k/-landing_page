@@ -122,3 +122,82 @@ body { overflow-x: hidden; }
 .field:focus { outline: none; border-color: #A4C552; background: #FAF8F2; box-shadow: 0 0 0 4px rgba(197,225,122,0.25); }
 .live-dot { width: 6px; height: 6px; border-radius: 999px; background: #A4C552; box-shadow: 0 0 0 0 rgba(164,197,82,0.55); animation: live 1.6s ease-out infinite; }
 @keyframes live { 0% { box-shadow: 0 0 0 0 rgba(164,197,82,0.55); } 100% { box-shadow: 0 0 0 8px rgba(164,197,82,0); } }
+
+/* =================================================================
+   SCROLL ANIMATIONS  ·  light-centric, brand-guide §13
+   One light source — a traveling lime reticle in the right gutter
+   ignites each section as it enters view.
+   ================================================================= */
+
+/* Right-gutter scroll thread + traveling reticle dot */
+.scroll-thread {
+  position: fixed; right: 28px; top: 100px; bottom: 100px;
+  width: 1px; background: rgba(31,31,29,0.06);
+  z-index: 50; pointer-events: none;
+  opacity: 0; animation: threadFadeIn 900ms 600ms cubic-bezier(.2,.7,.2,1) forwards;
+}
+@keyframes threadFadeIn { to { opacity: 1; } }
+.scroll-thread-fill {
+  position: absolute; left: -0.5px; top: 0; width: 2px; border-radius: 2px;
+  background: linear-gradient(to bottom, rgba(197,225,122,0) 0%, rgba(197,225,122,0.6) 18%, #C5E17A 60%, #A4C552 100%);
+  transition: height 220ms linear;
+  box-shadow: 0 0 6px rgba(197,225,122,0.45);
+}
+.scroll-thread-dot {
+  position: absolute; left: 0.5px; transform: translate(-50%, -50%);
+  transition: top 220ms cubic-bezier(.2,.7,.2,1);
+  filter: drop-shadow(0 0 6px rgba(197,225,122,0.7)) drop-shadow(0 0 14px rgba(164,197,82,0.45));
+}
+.scroll-thread-dot .dot { display: block; width: 9px; height: 9px; border-radius: 999px; background: #C5E17A; }
+.scroll-thread-dot .ring { position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; border-radius: 999px; border: 1.5px solid rgba(197,225,122,0.55); transform: translate(-50%,-50%); animation: threadPing 2.4s ease-out infinite; }
+@keyframes threadPing {
+  0%   { width: 9px;  height: 9px;  opacity: 0.85; }
+  100% { width: 44px; height: 44px; opacity: 0; }
+}
+.scroll-thread-tick {
+  position: absolute; left: -3px; width: 7px; height: 1px; background: rgba(31,31,29,0.18);
+  transition: background 500ms ease, box-shadow 500ms ease, width 500ms ease;
+}
+.scroll-thread-tick[data-lit="true"] {
+  width: 11px; left: -5px;
+  background: #A4C552;
+  box-shadow: 0 0 4px rgba(197,225,122,0.7);
+}
+.scroll-thread-tick .lbl {
+  position: absolute; right: 14px; top: 50%; transform: translate(0, -50%);
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.22em;
+  color: rgba(31,31,29,0.34); text-transform: uppercase; white-space: nowrap;
+  transition: color 500ms ease, opacity 500ms ease, transform 500ms cubic-bezier(.2,.7,.2,1);
+  opacity: 0.55;
+}
+.scroll-thread-tick[data-lit="true"] .lbl { opacity: 1; color: #1F1F1D; transform: translate(-4px, -50%); }
+
+/* Section ignite — soft lime bloom when scrolled into view (skip #top) */
+section[id]:not(#top)::before {
+  content: ""; position: absolute; left: 50%; top: -40px;
+  width: 720px; max-width: 90vw; height: 360px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(197,225,122,0.22), rgba(197,225,122,0) 70%);
+  filter: blur(24px); pointer-events: none; z-index: 0;
+  opacity: 0; transition: opacity 1600ms cubic-bezier(.2,.7,.2,1);
+}
+section[id]:not(#top).ignite-lit::before { opacity: 1; }
+
+/* Hero title character cascade — CJK-safe inline opacity-only animation */
+.char-cascade { opacity: 1 !important; transform: none !important; }
+.char-cascade .ch {
+  display: inline; opacity: 0;
+  animation: charRise 700ms cubic-bezier(.2,.7,.2,1) forwards;
+  will-change: opacity;
+}
+@keyframes charRise { to { opacity: 1; } }
+
+/* Hide on narrow viewports / reduced-motion */
+@media (max-width: 720px) {
+  .scroll-thread { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-thread, .char-cascade .ch, section[id]:not(#top)::before {
+    animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important;
+  }
+}
