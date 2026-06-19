@@ -2,9 +2,10 @@ import { TrafficLights, Click } from './DemoAtoms'
 
 export default function ImageEditorMock({ step = 0 }) {
   const newLayerActive = step >= 1
-  const brushActive    = step >= 2
+  const effectActive   = step >= 2
   const opacityActive  = step >= 3
   const opacityVal     = step >= 3 ? 50 : 100
+  const gradeOpacity   = effectActive ? opacityVal / 100 : 0
 
   const tools = [
     ['M3 3h6v6H3z M11 3h2v2h-2z','rect-select'],
@@ -55,8 +56,8 @@ export default function ImageEditorMock({ step = 0 }) {
               {row.map(([d, k], ci) => {
                 const idx = ri * 2 + ci
                 return (
-                  <button key={k} data-target={idx === 2 ? 'image-1' : undefined}
-                    className={`w-5 h-5 rounded flex items-center justify-center transition-colors ${idx === 2 && brushActive ? 'bg-[#C5E17A] text-[#1F1F1E]' : 'text-[#A8A599] hover:bg-[#33332F]'}`}>
+                  <button key={k}
+                    className="w-5 h-5 rounded flex items-center justify-center transition-colors text-[#A8A599] hover:bg-[#33332F]">
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
                   </button>
                 )
@@ -71,11 +72,11 @@ export default function ImageEditorMock({ step = 0 }) {
 
         {/* Tool options strip */}
         <div className="absolute left-12 right-0 top-[52px] h-6 border-b border-black/40 bg-[#2A2A28] flex items-center px-3 gap-3 text-[10px] text-[#A8A599] z-[1]">
-          <span>{brushActive ? '画笔: 柔角 60' : '移动'}</span>
+          <span>{effectActive ? '调整: 渐变映射' : '移动'}</span>
           <span className="w-px h-3 bg-black/40"></span>
           <span>不透明度: <span className="text-[#D9D6CE] font-mono">{opacityVal}%</span></span>
           <span className="w-px h-3 bg-black/40"></span>
-          <span>流量: 100%</span>
+          <span>{effectActive ? '混合模式: 柔光' : '对齐: 自动'}</span>
         </div>
 
         {/* Canvas area */}
@@ -91,6 +92,28 @@ export default function ImageEditorMock({ step = 0 }) {
               <div className="absolute right-[6%] top-[26%] w-[40%] aspect-square rounded-full bg-[#1F1F1E] mix-blend-multiply"></div>
               <div className="absolute left-[14%] right-[14%] bottom-[18%] h-[14%] bg-[#1F1F1E]/85"></div>
               <div className="absolute left-1/2 -translate-x-1/2 bottom-[8%] text-[11px] tracking-[0.5em] text-[#1F1F1E] font-semibold">SUMMER · 2026</div>
+              {newLayerActive && (
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    opacity: gradeOpacity,
+                    transition: 'opacity .8s cubic-bezier(.2,.7,.2,1)',
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#C5E17A] via-transparent to-[#FBBF77] mix-blend-soft-light"></div>
+                  <div className="absolute inset-0 bg-[#1F1F1E] mix-blend-overlay opacity-20"></div>
+                </div>
+              )}
+              {newLayerActive && !effectActive && (
+                <div className="absolute right-3 top-3 rounded bg-[#1F1F1E]/80 px-2 py-1 text-[9px] font-mono text-[#C5E17A]" style={{ animation: 'slideIn .45s ease-out' }}>
+                  调整图层已创建
+                </div>
+              )}
+              {effectActive && (
+                <div className="absolute right-3 top-3 rounded bg-[#1F1F1E]/80 px-2 py-1 text-[9px] font-mono text-[#C5E17A]" style={{ animation: 'slideIn .45s ease-out' }}>
+                  渐变映射 · 柔光 · {opacityVal}%
+                </div>
+              )}
             </div>
           </div>
           <div className="absolute left-0 right-0 bottom-0 h-5 bg-[#262624] border-t border-black/40 flex items-center px-3 text-[10px] text-[#8A877C] gap-3">
@@ -128,8 +151,16 @@ export default function ImageEditorMock({ step = 0 }) {
             {newLayerActive && (
               <div className="px-2 py-1.5 flex items-center gap-2 bg-[#33332F] border-b border-black/30" style={{ animation: 'slideIn .5s ease-out' }}>
                 <span className="text-[#8A877C]">👁</span>
-                <span className="w-7 h-7 rounded-sm bg-[#1F1F1E] border border-[#C5E17A]/60"></span>
-                <span className="text-[#C5E17A]">图层 6</span>
+                <span className="relative w-7 h-7 rounded-sm bg-[#1F1F1E] border border-[#C5E17A]/60 overflow-hidden">
+                  <span
+                    className="absolute inset-0 bg-gradient-to-br from-[#C5E17A] to-[#FBBF77]"
+                    style={{
+                      opacity: gradeOpacity,
+                      transition: 'opacity .8s cubic-bezier(.2,.7,.2,1)',
+                    }}
+                  ></span>
+                </span>
+                <span className="text-[#C5E17A]">渐变映射 · {opacityVal}%</span>
               </div>
             )}
             {layers.map((l, i) => (
@@ -141,7 +172,10 @@ export default function ImageEditorMock({ step = 0 }) {
             ))}
           </div>
           <div className="h-7 px-2 flex items-center gap-1 border-t border-black/40 relative">
-            <span className="w-5 h-5 rounded text-[10px] flex items-center justify-center hover:bg-[#33332F] text-[#A8A599]">fx</span>
+            <span data-target="image-1" className={`relative w-5 h-5 rounded text-[10px] flex items-center justify-center ${effectActive ? 'bg-[#C5E17A] text-[#1F1F1E]' : 'text-[#A8A599] hover:bg-[#33332F]'}`}>
+              fx
+              <Click active={effectActive} />
+            </span>
             <span className="w-5 h-5 rounded text-[12px] flex items-center justify-center hover:bg-[#33332F] text-[#A8A599]">◐</span>
             <span data-target="image-0" className={`relative w-5 h-5 rounded text-[12px] flex items-center justify-center ${newLayerActive ? 'bg-[#C5E17A] text-[#1F1F1E]' : 'text-[#A8A599] hover:bg-[#33332F]'}`}>
               ⊞

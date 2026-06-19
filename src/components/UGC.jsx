@@ -63,8 +63,12 @@ export default function UGC({ onOpenRules }) {
                 </span>
                 <input value={form.school} onChange={update('school')} className="field w-full px-4 py-3 rounded-xl bg-cream-100 border border-cream-200 text-[15px]" placeholder="例如：清华大学、字节跳动" />
               </label>
-              <button type="submit" className="col-span-2 mt-1 py-3.5 rounded-xl bg-lime text-ink-900 font-semibold hover:bg-lime-deep transition-colors">
-                申请加入指点助力
+              <button
+                type="button"
+                disabled
+                className="col-span-2 mt-1 cursor-not-allowed rounded-xl bg-ink-200 py-3.5 font-semibold text-ink-500"
+              >
+                暂未开启，稍请期待
               </button>
             </form>
           ) : (

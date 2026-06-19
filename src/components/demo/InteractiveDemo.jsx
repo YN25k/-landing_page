@@ -13,31 +13,31 @@ const DEMOS = {
     label: '图像编辑', chip: '海报设计 · 创意工具',
     Mock: ImageEditorMock,
     steps: [
-      { kind: 'click', key: 'image-0',                              caption: '点击「新建图层」',   side: 'left'  },
-      { kind: 'click', key: 'image-1',                              caption: '点击画笔工具',       side: 'right' },
-      { kind: 'drag',  key: 'image-2', dropKey: 'image-2-drop',     caption: '拖动滑块到 50%',     side: 'left'  },
+      { kind: 'click', key: 'image-0',                              caption: '点击「调整图层」',   side: 'left'  },
+      { kind: 'click', key: 'image-1',                              caption: '应用渐变映射',       side: 'left'  },
+      { kind: 'drag',  key: 'image-2', dropKey: 'image-2-drop',     caption: '拖动不透明度到 50%', side: 'left'  },
     ],
-    done: '海报有了新图层 · 干得漂亮',
+    done: '色调已统一 · 海报更有层次',
   },
   sheet: {
     label: '电子表格', chip: '季度报表 · 数据分析',
     Mock: SpreadsheetMock,
     steps: [
-      { kind: 'click', key: 'sheet-0',                              caption: '点击 B6 单元格',     side: 'right' },
-      { kind: 'type',  key: 'sheet-1', sequence: '=SUM',            caption: '键盘输入 =SUM',     side: 'right' },
-      { kind: 'click', key: 'sheet-2',                              caption: '点击「图表」',       side: 'right' },
+      { kind: 'click', key: 'sheet-0',                              caption: '点击合计单元格',     side: 'right' },
+      { kind: 'click', key: 'sheet-1',                              caption: '点击自动求和',       side: 'right' },
+      { kind: 'click', key: 'sheet-2',                              caption: '插入柱状图',         side: 'right' },
     ],
-    done: '利润趋势已生成 · 看到 Q4 的拐点了吗？',
+    done: '销售汇总和图表已生成',
   },
   video: {
     label: '视频剪辑', chip: '假日 vlog · 多轨剪辑',
     Mock: VideoEditorMock,
     steps: [
-      { kind: 'drag',  key: 'video-0', dropKey: 'video-0-drop',     caption: '拖素材到 V2 轨道',  side: 'right' },
-      { kind: 'click', key: 'video-1',                              caption: '点击剃刀工具',       side: 'right' },
-      { kind: 'click', key: 'video-2',                              caption: '点击「导出」',       side: 'left'  },
+      { kind: 'drag',  key: 'video-0', dropKey: 'video-0-drop',     caption: '拖素材到 V2 轨道',   side: 'right' },
+      { kind: 'click', key: 'video-1',                              caption: '点击刀片工具',       side: 'right' },
+      { kind: 'click', key: 'video-2',                              caption: '生成字幕轨道',       side: 'left'  },
     ],
-    done: '一刀剪好 · 准备发布',
+    done: '画面已叠加 · 字幕轨道已生成',
   },
 }
 
